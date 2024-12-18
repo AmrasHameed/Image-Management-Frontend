@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { logout } from './src/redux/slices/authSlice';
 import { store } from './src/redux/store';
 
-const URL = import.meta.env.VITE_BASE_URL
+const URL = 'https://vintagerags.store/'
 
 const axiosInstance = axios.create({
   baseURL: `${URL}api`,

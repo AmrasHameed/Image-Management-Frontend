@@ -4,7 +4,7 @@ import axiosInstance from '../../axios';
 import { toast } from 'react-toastify';
 import './Images.css';
 
-const URL = import.meta.env.VITE_BASE_URL
+const URL = 'https://vintagerags.store/'
 
 const ImageManagement = () => {
   const [images, setImages] = useState([]);
