@@ -4,13 +4,14 @@ import axiosInstance from '../../axios';
 import { toast } from 'react-toastify';
 import './Images.css';
 
-const URL = 'https://vintagerags.store/'
+const URL = 'https://vintagerags.store/';
 
 const ImageManagement = () => {
   const [images, setImages] = useState([]);
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [editingImage, setEditingImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const ImageManagement = () => {
       if (editingImage.newFile) {
         formData.append('image', editingImage.newFile);
       }
+      setLoading(true);
       const response = await axiosInstance.put(
         `/images/edit/${editingImage._id}`,
         formData,
@@ -71,6 +73,8 @@ const ImageManagement = () => {
       setEditingImage(null);
     } catch (error) {
       console.error('Update image error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -249,9 +253,14 @@ const ImageManagement = () => {
               </button>
               <button
                 onClick={handleSubmitEdit}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                disabled={loading} 
+                className={`px-4 py-2 rounded-lg text-white ${
+                  loading
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-blue-600 hover:bg-blue-700'
+                }`}
               >
-                Save Changes
+                {loading ? 'Saving...' : 'Save Changes'}
               </button>
             </div>
           </div>
